@@ -1,0 +1,29 @@
+---
+// src/components/ThemeToggle.astro
+---
+
+<script>
+  function toggleTheme() {
+    const htmlElement = document.documentElement;
+    const isDarkMode = htmlElement.classList.contains('dark');
+    if (isDarkMode) {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Establecer el tema inicial basado en localStorage
+  if (typeof window !== 'undefined') {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+  }
+</script>
+
+<button onClick="toggleTheme()" class="p-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
+  Cambiar Tema
+</button>

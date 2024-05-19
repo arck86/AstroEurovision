@@ -1,20 +1,28 @@
 ---
-import { type VotosResponse} from './types/VotosResponse';
+import { Image } from 'astro:assets';
+import { type VotosResponse} from '../types/VotosResponse';
 
-  const resp = await fetch('http://localhost:8080/listar')
-  const votos = await resp.json()
-  console.log(resp);
-  console.log(votos);
-  //<img class="rounded-xl w-10 h-2 " src="../assets/{votos.bandera}"/>
+const resp = await fetch('http://localhost:8080/listar')
+const votos = await resp.json()
+
 ---
 
-<div>
- {
-  votos.map((voto) => 
-    <div class="p-4 bg-white rounded-lg shadow-md">
-      
-      <p class="text-gray-500">{voto.nombre}</p>
-    </div>
-  )
- }
+<div class="overflow-x-auto dark:bg-gray-800">
+  <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-gray-200">
+    {
+      votos.map((voto: VotosResponse) => 
+        <div class="bg-gray-800 divide-y divide-gray-700 sm:flex sm:justify-between sm:px-6 sm:py-3 sm:items-stretch">
+            <div class="px-4 py-3 sm:w-1/5 flex items-center">
+              <Image class="w-10 h-10 rounded-full" src={`/public/bandera/${voto.bandera}`} alt="Bandera" />
+            </div>
+          <div class="border px-4 py-3 sm:w-3/5 flex items-center justify-between">
+            <a class="text-blue-500 hover:underline" href={voto.cancionYoutube} target="_blank">{voto.cantante}: {voto.cancion}</a>
+            <select class="text-sm text-gray-300 bg-gray-700">
+              ${Array.from({length: 12}, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+      )
+    }
+  </div>
 </div>

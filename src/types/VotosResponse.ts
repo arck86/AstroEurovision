@@ -1,4 +1,4 @@
-export type VotosResponse {
+export type VotosResponse = {
     id:             number;
     nombre:         string;
     bandera:        string;
