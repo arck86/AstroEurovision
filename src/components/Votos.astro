@@ -11,16 +11,28 @@ const votos = await resp.json()
   <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-gray-200">
     {
       votos.map((voto: VotosResponse) => 
-        <div class="bg-gray-800 divide-y divide-gray-700 sm:flex sm:justify-between sm:px-6 sm:py-3 sm:items-stretch">
+        <div class="bg-gray-800 divide-y divide-gray-700 sm:flex sm:justify-normal sm:px-6 sm:py-3 sm:items-stretch">
             <div class="px-4 py-3 sm:w-1/5 flex items-center">
-              <Image class="w-10 h-10 rounded-full" src={`/public/bandera/${voto.bandera}`} alt="Bandera" />
+            <img class="w-16 h-16 rounded-full" src={`/public/bandera/${voto.bandera}`} alt="Bandera" />
             </div>
-          <div class="border px-4 py-3 sm:w-3/5 flex items-center justify-between">
+            <div class="border px-4 py-3 sm:w-3/5 flex items-center justify-between">
             <a class="text-blue-500 hover:underline" href={voto.cancionYoutube} target="_blank">{voto.cantante}: {voto.cancion}</a>
             <select class="text-sm text-gray-300 bg-gray-700">
-              ${Array.from({length: 12}, (_, i) => `<option value="${i + 1}">${i + 1}</option>`).join('')}
+              <option value=""></option>
+              <option value="1">1 Punto</option>
+              <option value="2">2 Puntos</option>
+              <option value="3">3 Puntos</option>
+              <option value="4">4 Puntos</option>
+              <option value="5">5 Puntos</option>
+              <option value="6">6 Puntos</option>
+              <option value="7">7 Puntos</option>
+              <option value="8">8 Puntos</option>
+              <option value="9">9 Puntos</option>
+              <option value="10">10 Puntos</option>
+              <option value="11">11 Puntos</option>
+              <option value="12">12 Puntos</option>
             </select>
-          </div>
+            </div>
         </div>
       )
     }
