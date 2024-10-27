@@ -1,28 +1,28 @@
 ---
 import { Image } from 'astro:assets';
 import { type VotosResponse} from '../types/VotosResponse';
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 
 
 const resp = await fetch('http://localhost:8080/listar')
 const votos = await resp.json()
 
-if (Astro.request.method === "POST") {
-  try {
-      const data = await Astro.request.formData();
-      console.log(data);
-      const response = await fetch("http://localhost:8080/votos/save",
-        {
-          method: 'POST',
-          body: data,
-          });
-      return Astro.redirect("/login");
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
+// if (Astro.request.method === "POST") {
+//   try {
+//       const data = await Astro.request.formData();
+//       console.log(data);
+//       const response = await fetch("http://localhost:8080/votos/save",
+//         {
+//           method: 'POST',
+//           body: data,
+//           });
+//       return Astro.redirect("/login");
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       console.error(error.message);
+//     }
+//   }
+// }
 
 ---
 <form id="votosData" method="POST" >
