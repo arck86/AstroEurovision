@@ -6,54 +6,14 @@ const votos = await resp.json();
 
 if (Astro.request.method === "POST") {
   try {
-    const data = await Astro.request.formData();
-    const votosArray = transformFormDataToJSON(data);
- 
-
-
-    const response = await fetch('http://localhost:8080/votos/save', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(votosArray) // Enviar como JSON
-    });
-
-    if (response.ok) {
-      console.log("Datos enviados correctamente al nuevo endpoint");
-      Astro.redirect("/");
-    } else {
-      console.error("Error al enviar los datos al nuevo endpoint");
-    }
+    const data = await Astro.request.text();
+    console.log(data);
+    // Aquí puedes procesar los datos recibidos
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error al procesar el formulario:", error.message);
     }
   }
-}
-
-function transformFormDataToJSON(data: any[] | FormData) {
-  const votos = [];
-  for (const [key, value] of data.entries()) {
-    const regex = /votos\[(\d+)]\.(\w+)/;
-    const match = key.match(regex);
-    
-    if (match) {
-      const index = match[1]; // índice del voto
-      const field = match[2]; // "id" o "voto"
-      
-      // Si el índice no existe en el array de votos, creamos un objeto vacío
-      if (!votos[index]) {
-        votos[index] = {};
-      }
-      
-      // Asignamos el valor al campo correspondiente
-      votos[index][field] = value;
-    }
-  }
-  
-  return votos;
 }
 ---
 <form method="POST">
@@ -69,11 +29,11 @@ function transformFormDataToJSON(data: any[] | FormData) {
               </div>
               <div class="px-10 py-3 sm:w-3/4 flex items-center justify-between">
                 <a class="text-blue-500 hover:underline" href={voto.cancionYoutube} target="_blank">{voto.cantante}: {voto.cancion}</a>
-                <input type="hidden" id={`votos_${index}_id`} name={`votos[${index}].id`} value={voto.id} />
-                <select id={`votos_${index}_voto`} class="text-sm text-gray-300 bg-gray-700" name={`votos[${index}].voto`}>
-                  <option value="0">0 Puntos</option>
-                  {[...Array(13)].map((_, i) => (
-                     i > 0 ? <option value={i}>{i} Puntos</option> : null
+                <input type="hidden" id={`votos_${index}_id`} name={`votos_${index}_id`} value={voto.id} />
+                <select id={`votos_${index}_voto`} class="text-sm text-gray-300 bg-gray-700" name={`votos_${index}_voto`}>
+                  <option value="0"></option>
+                  {[...Array(12)].map((_, i) => (
+                    <option value={i}>{i} Puntos</option>
                   ))}
                 </select>
               </div>
