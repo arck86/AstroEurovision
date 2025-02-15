@@ -1,0 +1,42 @@
+---
+import type { Resultados } from '../types/Resultados';
+
+const resp = await fetch('http://localhost:8080/tabla');
+const resultados = await resp.json();
+console.log(resultados);
+
+---
+
+<div class="overflow-x-auto dark:bg-gray-800">
+  <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-gray-200">
+    <table class="w-full border border-gray-300 rounded-lg shadow-md bg-white">
+      <thead class="bg-blue-600 text-white">
+        <tr>
+          <th class="p-3 text-left">Bandera</th>
+          <th class="p-3 text-left">País</th>
+          <th class="p-3 text-left">Cantante</th>
+          <th class="p-3 text-left">Canción</th>
+          <th class="p-3 text-left">Votos</th>
+          <th class="p-3 text-left">YouTube</th>
+        </tr>
+      </thead>
+      <tbody>
+        {resultados.map((r: Resultados, index: number) => (
+          <tr class={`border-t border-gray-300 ${index % 2 === 0 ? 'bg-gray-100' : 'bg-white'} hover:bg-gray-200 transition`}>
+            <td class="p-3">
+              <img class="w-12 h-12 rounded-full" src={`/bandera/${r.bandera}`} alt="Bandera" />
+            </td>
+            <td class="p-3 font-semibold">{r.nombre}</td>
+            <td class="p-3">{r.cantante}</td>
+            <td class="p-3">{r.cancion}</td>
+            <td class="p-3 font-bold text-blue-700">{r.votoTotal}</td>
+            <td class="p-3">
+              <a href={r.cancionYoutube} target="_blank" class="text-blue-600 hover:underline">
+                🎵 Ver
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
