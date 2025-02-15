@@ -38,18 +38,15 @@ const votos = await resp.json();
   </div>
 
   <script>
-    // Find all buttons with the `alert` class on the page.
     const buttons = document.querySelectorAll('button.votacion');
   
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
-        alert('Button was clicked!');
-        debugger;
         const formData: { id: number , pais: number; voto: number; }[] = [];
         const selectElements = document.querySelectorAll('select[name^="votos"]');
 
         selectElements.forEach(select => {
-          const index = select.name.match(/\d+/)[0]; // Extrae el índice del name (votos[0].voto)
+          const index = select.name.match(/\d+/)[0];
           const idPais = document.querySelector(`#votos_${index}_idPais`).value;
           const voto = select.value;
 
@@ -59,15 +56,21 @@ const votos = await resp.json();
         console.log("Datos a enviar:", formData); // Para depuración
 
         // Enviar los datos por AJAX usando fetch
-        fetch('http://localhost:8080/votos/save', {
+        fetch('http://localhost:8080/votos/save', { // aqui va la IP de la maquina principal
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(formData) // Enviar como JSON
+            body: JSON.stringify(formData)
           })
-        .then(response => {window.location.href = "/"}) 
+        .then(response => {
+          if (!response.ok) {
+            alert('¿Estas seguro que has votado bien?');
+            window.location.href = "/votacion"
+          }else{
+            window.location.href = "/"
+          }})      
         .catch(error => console.error("Error en la solicitud:", error));
         });
       });
